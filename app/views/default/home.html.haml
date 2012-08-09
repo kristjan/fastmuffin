@@ -25,8 +25,11 @@
         = prediction.arrival_time.getlocal.strftime("%-I:%0M %P")
 
 
-%P
-  %a{:href => sync_path} Sync my checkins
+%ul
+  %li
+    %a{:href => sync_path} Sync my checkins
+  %li
+    %a{:href => test_path} Test other predictions
 
 %footer
   %a(href="/logout") Log out

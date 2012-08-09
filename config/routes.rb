@@ -8,5 +8,7 @@ SinglyRailsSkeleton::Application.routes.draw do
 
   match "sync"                   => "checkins#sync"
 
+  match "test"                   => "default#test"
+
   root :to                       => "default#home"
 end

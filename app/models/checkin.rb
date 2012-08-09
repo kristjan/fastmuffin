@@ -7,6 +7,13 @@ class Checkin < ActiveRecord::Base
     data.venue.name
   ].join(',')
 
+  def self.at(user, venue_id)
+    Checkin.
+      where(:user_id => user.id, :venue_id => venue_id).
+      order(:checked_in_at).
+      last
+  end
+
   def self.from_singly(data)
     self.new(
       :venue_id => data['data']['venue']['id'],
@@ -20,7 +27,6 @@ class Checkin < ActiveRecord::Base
   end
 
   def self.predict(checkins)
-    checkins = checkins.sort_by(&:checked_in_at)
     all_checkins = Checkin.
       where(:user_id => checkins.first.user_id).
       order(:checked_in_at).
@@ -79,5 +85,14 @@ class Checkin < ActiveRecord::Base
       until_time = checkins.map(&:checked_in_at).min
       until_time = until_time.to_i * 1000 - 1 if until_time
     end while until_time && until_time > last_time
+  end
+
+  def self.venues(user)
+    Checkin.where(:user_id => user.id).all.map do |checkin|
+      [checkin.venue_id, checkin.venue_name]
+    end.
+      uniq.
+      map{|id, name| OpenStruct.new(:id => id, :name => name)}.
+      sort_by(&:name)
   end
 end

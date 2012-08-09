@@ -1,0 +1,6 @@
+%form{:action => root_url, :method => 'GET'}
+  - 2.times do |i|
+    %select{:name => "venue_#{i + 1}"}
+      - @venues.each do |venue|
+        %option{:value => venue.id}= venue.name
+  %input{:type => :submit, :value => "Predict"}
