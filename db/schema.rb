@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(:version => 20120809023057) do
 
   create_table "checkins", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "venue_id"
-    t.string   "venue_name"
-    t.datetime "checked_in_at"
+    t.integer  "user_id",       :null => false
+    t.string   "venue_id",      :null => false
+    t.string   "venue_name",    :null => false
+    t.datetime "checked_in_at", :null => false
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(:version => 20120809023057) do
   add_index "checkins", ["user_id", "venue_id"], :name => "index_checkins_on_user_id_and_venue_id"
 
   create_table "users", :force => true do |t|
-    t.string   "singly_id"
-    t.string   "access_token"
+    t.string   "singly_id",    :null => false
+    t.string   "access_token", :null => false
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
