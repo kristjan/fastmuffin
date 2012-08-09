@@ -1,7 +1,11 @@
 %h1 FastMuffin
-- if session[:access_token]
+- if viewer
   %p
     Hi!
+    %br
+    Your access_token is
+    %input{:type => :text, :value => access_token}
+    %br
     %a(href="/logout") Log out
 - else
   Please
