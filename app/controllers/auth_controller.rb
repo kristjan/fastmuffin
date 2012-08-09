@@ -5,7 +5,7 @@ class AuthController < ApplicationController
   def callback
     auth = request.env["omniauth.auth"]
 
-    user = User.find_or_create_by_singly_id(auth.extra.id)
+    user = User.find_or_initialize_by_singly_id(auth.extra.raw_info.id)
     user.update_attributes(:access_token => auth.credentials.token)
 
     session[:viewer_id]    = user.id
