@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  venue_id: MyString
+  venue_name: MyString
+  checked_in_at: 2012-08-08 19:30:57
+
+two:
+  user_id: 1
+  venue_id: MyString
+  venue_name: MyString
+  checked_in_at: 2012-08-08 19:30:57

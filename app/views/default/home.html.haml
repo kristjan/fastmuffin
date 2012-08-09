@@ -1,11 +1,17 @@
 %h1 FastMuffin
 %header
   %h2 Hi!
+
+  - if flash[:notice]
+    %p.notice= flash[:notice]
 %p
   %br
   Your access_token is
   %input{:type => :text, :value => access_token}
   %br
+
+%P
+  %a{:href => sync_path} Sync my checkins
 
 %footer
   %a(href="/logout") Log out
