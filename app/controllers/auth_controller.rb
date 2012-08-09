@@ -12,7 +12,7 @@ class AuthController < ApplicationController
     session[:singly_id]    = user.singly_id
     session[:access_token] = user.access_token
 
-    redirect_to root_path
+    redirect_to sync_path
   end
 
   def login

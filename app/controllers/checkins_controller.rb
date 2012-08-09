@@ -3,12 +3,7 @@ class CheckinsController < ApplicationController
 
   def sync
     Checkin.sync(viewer)
-    last_checkin = Checkin.last(viewer)
-
-    flash[:notice] = last_checkin ?
-       "Last checkin was at #{last_checkin.venue_name}." :
-       "No checkins."
-
+    flash[:notice] = "Checkins synched"
     redirect_to root_path
   end
 end
