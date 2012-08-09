@@ -1,12 +1,11 @@
 %h1 FastMuffin
-- if viewer
-  %p
-    Hi!
-    %br
-    Your access_token is
-    %input{:type => :text, :value => access_token}
-    %br
-    %a(href="/logout") Log out
-- else
-  Please
-  %a(href="/auth/singly?service=foursquare") Log In with Foursquare
+%header
+  %h2 Hi!
+%p
+  %br
+  Your access_token is
+  %input{:type => :text, :value => access_token}
+  %br
+
+%footer
+  %a(href="/logout") Log out

@@ -2,8 +2,6 @@ require "httparty"
 
 class AuthController < ApplicationController
 
-  SINGLY_API_BASE = "https://api.singly.com"
-
   def callback
     auth = request.env["omniauth.auth"]
 
@@ -14,11 +12,14 @@ class AuthController < ApplicationController
     session[:singly_id]    = user.singly_id
     session[:access_token] = user.access_token
 
-    redirect_to "/"
+    redirect_to root_path
+  end
+
+  def login
   end
 
   def logout
     session.clear
-    redirect_to "/"
+    redirect_to root_path
   end
 end

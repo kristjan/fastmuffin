@@ -1,6 +1,9 @@
 require "httparty"
 
 class DefaultController < ApplicationController
+
+  before_filter :require_viewer
+
   def home
   end
 
@@ -24,5 +27,9 @@ private
 
   def profiles_url
     "#{SINGLY_API_BASE}/profiles"
+  end
+
+  def require_viewer
+    redirect_to login_path unless viewer
   end
 end
