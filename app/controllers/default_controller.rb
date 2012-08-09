@@ -4,6 +4,6 @@ class DefaultController < ApplicationController
   before_filter :require_viewer
 
   def home
-    @checkins = Checkin.recent(viewer)
+    @checkins = Checkin.recent(viewer).reverse
   end
 end

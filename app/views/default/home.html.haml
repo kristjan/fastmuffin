@@ -1,14 +1,7 @@
 %h1 FastMuffin
 %header
-  %h2 Hi!
-
   - if flash[:notice]
     %p.notice= flash[:notice]
-%p
-  %br
-  Your access_token is
-  %input{:type => :text, :value => access_token}
-  %br
 
 %p
   Your most recent checkins are
@@ -16,8 +9,21 @@
     - @checkins.each do |checkin|
       %li
         = checkin.venue_name
-        = distance_of_time_in_words(Time.now, checkin.checked_in_at)
-        ago
+        at
+        = checkin.checked_in_at.getlocal.strftime("%-I:%0M %P")
+
+%p
+  You're probably heading
+  %ul
+    - Checkin.predict(@checkins).each do |prediction|
+      %li
+        = "#{prediction.probability}%"
+        = "(#{prediction.count} #{'time'.pluralize(prediction.count)})"
+        to
+        = prediction.venue_name
+        at
+        = prediction.arrival_time.getlocal.strftime("%-I:%0M %P")
+
 
 %P
   %a{:href => sync_path} Sync my checkins

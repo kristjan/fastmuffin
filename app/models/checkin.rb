@@ -19,6 +19,35 @@ class Checkin < ActiveRecord::Base
     self.recent(user, 1).first
   end
 
+  def self.predict(checkins)
+    checkins = checkins.sort_by(&:checked_in_at)
+    all_checkins = Checkin.
+      where(:user_id => checkins.first.user_id).
+      order(:checked_in_at).
+      all
+    past = all_checkins.each_cons(3).select do |a, b, c|
+      [a.venue_id, b.venue_id] == checkins.map(&:venue_id)
+    end
+    count = past.size
+    guesses = past.
+      group_by {|a, b, c| c.venue_id}.
+      sort_by {|venue_id, tuples| -tuples.size}.
+      first(3)
+
+    guesses.map do |venue_id, tuples|
+      venue_name = tuples.first.last.venue_name
+      average_transit = tuples.map do |a, b, c|
+        c.checked_in_at - b.checked_in_at
+      end.inject(0.0, :+) / tuples.size
+      OpenStruct.new({
+        :venue_name => venue_name,
+        :count => tuples.size,
+        :probability => (100 * tuples.size / count).round,
+        :arrival_time => checkins.last.checked_in_at + average_transit
+      })
+    end
+  end
+
   def self.recent(user, limit=2)
     Checkin.where(:user_id => user.id).
             order('checked_in_at desc').
